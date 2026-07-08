@@ -3,19 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#071026" />
   <title>YT Video — UI Prototype</title>
   <meta name="description" content="Frontend UI prototype for YT Video (mobile-first)." />
 
-  <!-- Google Fonts -->
+  <!-- Preconnect & Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
   <!-- Navigation -->
   <header class="nav-wrap">
-    <nav class="nav container">
+    <nav class="nav container" role="navigation" aria-label="Main navigation">
       <div class="brand">
         <div class="logo" aria-hidden>
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,43 +35,44 @@
           </svg>
         </div>
         <div class="brand-text">
-          <h1>YT Video</h1>
+          <h1 class="site-title">YT Video</h1>
           <p class="muted">UI Prototype</p>
         </div>
       </div>
 
-      <button class="menu-btn" aria-label="Open menu">☰</button>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false" type="button">☰</button>
     </nav>
   </header>
 
   <!-- Main -->
-  <main>
+  <main id="main-content">
     <!-- Hero (mobile-first stacked layout) -->
-    <section class="hero container">
-      <h2 class="title">Save YouTube videos — visual prototype</h2>
+    <section class="hero container" aria-labelledby="hero-heading">
+      <h2 id="hero-heading" class="title">Save YouTube videos — visual prototype</h2>
       <p class="lead muted">A mobile-first frontend UI built with HTML, CSS, and vanilla JavaScript. No backend, no downloads — visual prototype only.</p>
 
       <!-- URL input area -->
-      <div class="input-card glass">
+      <div class="input-card glass" role="region" aria-labelledby="input-legend">
+        <div id="input-legend" class="sr-only">Video URL input</div>
         <label for="video-url" class="sr-only">Video URL</label>
-        <input id="video-url" type="url" inputmode="url" placeholder="Paste YouTube URL here" aria-label="Video URL" />
+        <input id="video-url" type="url" inputmode="url" placeholder="Paste YouTube URL here" aria-label="Video URL" autocomplete="off" />
 
         <div class="actions">
-          <select id="preset-quality" aria-label="Preset quality">
+          <select id="preset-quality" aria-label="Preset quality" aria-describedby="quality-desc">
             <option>MP4 • 1080p</option>
             <option>MP4 • 720p</option>
             <option>MP3 • 128kbps</option>
           </select>
 
-          <button id="fetch-btn" class="btn primary">Preview</button>
+          <button id="fetch-btn" class="btn primary" type="button">Preview</button>
         </div>
 
-        <p class="muted small">This is a UI-only prototype. Preview shows mock data and controls are placeholders.</p>
+        <p id="quality-desc" class="muted small">This is a UI-only prototype. Preview shows mock data and controls are placeholders.</p>
       </div>
 
       <!-- Preview card (hidden initially) -->
-      <div id="preview-card" class="card preview-card glass hidden">
-        <div class="thumb">
+      <div id="preview-card" class="card preview-card glass hidden" aria-hidden="true">
+        <div class="thumb" role="img" aria-label="Video thumbnail placeholder">
           <svg viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
             <rect width="100%" height="100%" fill="#0b1220" rx="10" />
             <g fill="#fff" opacity="0.9">
@@ -81,20 +87,20 @@
           <p class="muted">Demo Channel • 3:21 • 1.2M views</p>
 
           <div class="download-options">
-            <button class="btn outline">MP4 • 1080p • 25MB</button>
-            <button class="btn outline">MP4 • 720p • 12MB</button>
-            <button class="btn outline">MP3 • 128kbps • 3.2MB</button>
+            <button class="btn outline" type="button">MP4 • 1080p • 25MB</button>
+            <button class="btn outline" type="button">MP4 • 720p • 12MB</button>
+            <button class="btn outline" type="button">MP3 • 128kbps • 3.2MB</button>
           </div>
 
           <div class="card-actions">
-            <button id="download-btn" class="btn primary">Download (placeholder)</button>
-            <button id="more-btn" class="btn ghost">Options</button>
+            <button id="download-btn" class="btn primary" type="button">Download (placeholder)</button>
+            <button id="more-btn" class="btn ghost" type="button">Options</button>
           </div>
         </div>
       </div>
 
       <!-- Quick features summary (compact) -->
-      <div class="stats small-card glass">
+      <div class="stats small-card glass" role="region" aria-label="Quick stats">
         <div class="stat"><strong>Fast</strong><span class="muted">Smooth UI</span></div>
         <div class="stat"><strong>Secure</strong><span class="muted">Prototype only</span></div>
         <div class="stat"><strong>Responsive</strong><span class="muted">Mobile-first</span></div>
@@ -102,31 +108,31 @@
     </section>
 
     <!-- Features -->
-    <section id="features" class="container features">
-      <h2 class="section-title">Features</h2>
+    <section id="features" class="container features" aria-labelledby="features-heading">
+      <h2 id="features-heading" class="section-title">Features</h2>
       <p class="section-lead muted">Interface elements and flows presented for review.</p>
 
       <div class="features-grid">
         <div class="feature card glass">
-          <div class="icon">🎨</div>
+          <div class="icon" aria-hidden>🎨</div>
           <h3>Clean design</h3>
           <p class="muted">Modern spacing and readable typography.</p>
         </div>
 
         <div class="feature card glass">
-          <div class="icon">⚡</div>
+          <div class="icon" aria-hidden>⚡</div>
           <h3>Smooth interactions</h3>
           <p class="muted">Subtle transitions and micro-animations.</p>
         </div>
 
         <div class="feature card glass">
-          <div class="icon">📱</div>
+          <div class="icon" aria-hidden>📱</div>
           <h3>Mobile-first</h3>
           <p class="muted">Primary experience optimized for smartphones.</p>
         </div>
 
         <div class="feature card glass">
-          <div class="icon">🧩</div>
+          <div class="icon" aria-hidden>🧩</div>
           <h3>Ready for integration</h3>
           <p class="muted">All elements expose hooks for Phase 2.</p>
         </div>
@@ -134,8 +140,8 @@
     </section>
 
     <!-- How it works -->
-    <section id="how" class="container how">
-      <h2 class="section-title">How it works (prototype)</h2>
+    <section id="how" class="container how" aria-labelledby="how-heading">
+      <h2 id="how-heading" class="section-title">How it works (prototype)</h2>
       <div class="steps">
         <div class="step card">
           <div class="num">1</div>
@@ -155,8 +161,8 @@
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="container faq">
-      <h2 class="section-title">FAQ</h2>
+    <section id="faq" class="container faq" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="section-title">FAQ</h2>
       <div class="accordion">
         <details open>
           <summary>Is this a working downloader?</summary>
@@ -185,7 +191,7 @@
         <p class="muted">UI Prototype • Frontend only</p>
       </div>
 
-      <div class="links">
+      <div class="links" role="navigation" aria-label="Footer links">
         <a href="#features">Features</a>
         <a href="#how">How it works</a>
         <a href="#faq">FAQ</a>
@@ -198,14 +204,14 @@
   </footer>
 
   <!-- Loading / Success / Error overlays (UI only) -->
-  <div id="overlay" class="overlay hidden">
-    <div class="overlay-card">
+  <div id="overlay" class="overlay hidden" aria-hidden="true" aria-live="polite">
+    <div class="overlay-card" role="status" aria-busy="false">
       <div id="overlay-spinner" class="spinner" aria-hidden></div>
       <p id="overlay-text">Processing...</p>
     </div>
   </div>
 
-  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite" tabindex="0"></div>
 
   <script src="js/app.js" defer></script>
 </body>
