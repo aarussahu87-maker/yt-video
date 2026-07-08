@@ -1,66 +1,110 @@
-// app.js — Mobile-first prototype interactions (no backend)
+// app.js — Frontend uses backend preview & download endpoints. No demo/simulated UI.
 
 document.addEventListener('DOMContentLoaded', ()=>{
-  const fetchBtn = document.getElementById('fetch-btn');
-  const previewCard = document.getElementById('preview-card');
   const downloadBtn = document.getElementById('download-btn');
-  const overlay = document.getElementById('overlay');
-  const overlayText = document.getElementById('overlay-text');
-  const toast = document.getElementById('toast');
-  const moreBtn = document.getElementById('more-btn');
+  const videoInput = document.getElementById('video-url');
+  const thumbContainer = document.getElementById('thumb-container');
+  const videoTitleEl = document.getElementById('video-title');
+  const videoMetaEl = document.getElementById('video-meta');
+  const formatsContainer = document.getElementById('formats');
+  const previewCard = document.getElementById('preview-card');
+  const statusEl = document.getElementById('status');
+  const presetSelect = document.getElementById('preset-quality');
 
-  // Keep preview hidden initially
-  previewCard.classList.add('hidden');
+  if(!downloadBtn || !videoInput) return;
 
-  function showOverlay(text){
-    overlayText.textContent = text || 'Processing...';
-    overlay.classList.remove('hidden');
-  }
-  function hideOverlay(){ overlay.classList.add('hidden') }
-
-  function showToast(message, success=true){
-    toast.textContent = message;
-    toast.style.background = success ? 'linear-gradient(90deg,#5A4BEE,#FF7AB6)' : 'linear-gradient(90deg,#FF7AB6,#FFB86B)';
-    toast.classList.remove('hidden');
-    setTimeout(()=>{ toast.classList.add('hidden') },3000);
+  function setStatus(msg){
+    if(!statusEl) return;
+    statusEl.textContent = msg || '';
   }
 
-  // Simulate preview flow (client-only)
-  fetchBtn.addEventListener('click', ()=>{
-    const url = document.getElementById('video-url').value.trim();
-    if(!url){ showToast('Please paste a video URL.', false); return; }
+  function clearPreview(){
+    previewCard.classList.add('hidden');
+    previewCard.setAttribute('aria-hidden','true');
+    thumbContainer.innerHTML = '';
+    videoTitleEl.textContent = '—';
+    videoMetaEl.textContent = '—';
+    formatsContainer.innerHTML = '';
+  }
 
-    showOverlay('Loading preview (demo)...');
-    setTimeout(()=>{
-      hideOverlay();
+  async function fetchAndShow(url){
+    clearPreview();
+    setStatus('');
+
+    try{
+      const res = await fetch('/api/preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+
+      if(!res.ok){
+        const err = await res.json().catch(()=>({message:'Failed to fetch metadata'}));
+        setStatus(err.message || 'Failed to fetch metadata');
+        return;
+      }
+
+      const data = await res.json();
+      // populate
+      thumbContainer.innerHTML = '';
+      if(data.thumbnail){
+        const img = document.createElement('img');
+        img.src = data.thumbnail;
+        img.alt = data.title || 'Video thumbnail';
+        img.loading = 'lazy';
+        img.style.width = '100%';
+        img.style.height = 'auto';
+        img.style.borderRadius = '8px';
+        thumbContainer.appendChild(img);
+      }
+
+      videoTitleEl.textContent = data.title || 'Untitled';
+      const mins = Math.floor((data.lengthSeconds||0)/60);
+      const secs = (data.lengthSeconds||0) % 60;
+      videoMetaEl.textContent = `${data.author || ''} • ${mins}:${secs.toString().padStart(2,'0')} • ${data.views ? data.views + ' views' : ''}`;
+
+      formatsContainer.innerHTML = '';
+      const videoFormats = (data.formats && data.formats.video) || [];
+      const audioFormats = (data.formats && data.formats.audio) || [];
+
+      function makeBtn(f, type){
+        const btn = document.createElement('button');
+        btn.className = 'btn outline';
+        btn.type = 'button';
+        btn.textContent = type === 'audio' ? `${f.container.toUpperCase()} • ${f.bitrate || 'audio'}` : `${f.container.toUpperCase()} • ${f.quality || 'video'}`;
+        btn.addEventListener('click', ()=>{
+          const q = new URLSearchParams({ url, itag: f.itag, type: type });
+          // navigate to download endpoint to start download
+          window.location.href = '/api/download?' + q.toString();
+        });
+        return btn;
+      }
+
+      videoFormats.forEach(f=> formatsContainer.appendChild(makeBtn(f,'video')));
+      audioFormats.forEach(f=> formatsContainer.appendChild(makeBtn(f,'audio')));
+
       previewCard.classList.remove('hidden');
-      previewCard.scrollIntoView({behavior:'smooth',block:'center'});
-      showToast('Preview ready (UI only)');
-    }, 800);
-  });
+      previewCard.setAttribute('aria-hidden','false');
 
-  // Simulate download placeholder
+    } catch(err){
+      console.error(err);
+      setStatus('Server error while fetching metadata');
+    }
+  }
+
   downloadBtn.addEventListener('click', ()=>{
-    showOverlay('Preparing (demo)...');
-    setTimeout(()=>{
-      hideOverlay();
-      const ok = Math.random() > 0.15;
-      if(ok){ showToast('Success: file prepared (demo)'); }
-      else { showToast('Error preparing file (demo)', false); }
-    }, 1000);
+    const url = (videoInput.value || '').trim();
+    if(!url){ setStatus('Please enter a YouTube URL'); return; }
+    setStatus('');
+    fetchAndShow(url);
   });
 
-  moreBtn.addEventListener('click', ()=>{
-    showToast('Options will be available in Phase 2');
-  });
-
-  // Smooth scrolling for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(a=>{
-    a.addEventListener('click', e=>{
+  // Enter key triggers same behavior
+  videoInput.addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter'){
       e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if(target) target.scrollIntoView({behavior:'smooth'});
-    });
+      downloadBtn.click();
+    }
   });
 
 });
