@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>YT Video — Premium UI Prototype</title>
+  <meta name="description" content="Premium frontend prototype for YT Video downloader (UI only)." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="nav-wrap">
+    <nav class="nav container">
+      <div class="brand">
+        <div class="logo">
+          <!-- Inline SVG logo -->
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+            <rect x="2" y="2" width="20" height="20" rx="6" fill="url(#g)" />
+            <path d="M8 9l6-3v10l-6-3V9z" fill="white" opacity="0.95"/>
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#6D5CFF"/>
+                <stop offset="1" stop-color="#FF7AB6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>YT Video</h1>
+          <p class="muted">Premium UI Prototype</p>
+        </div>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <button class="btn ghost">Sign in</button>
+        <button class="btn primary">Upgrade</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <h2 class="title">Save videos from YouTube in seconds — UI prototype</h2>
+          <p class="lead">A premium, responsive front-end prototype built with HTML, CSS, and vanilla JavaScript. No backend, no downloads — just pixel-perfect UI ready for Phase 2.</p>
+
+          <!-- URL input area -->
+          <div class="input-card glass">
+            <label for="video-url" class="sr-only">Video URL</label>
+            <input id="video-url" type="url" placeholder="Paste YouTube URL here (placeholder)" />
+
+            <div class="actions">
+              <div class="quality-select">
+                <select id="preset-quality" aria-label="Preset quality">
+                  <option>MP4 - 1080p</option>
+                  <option>MP4 - 720p</option>
+                  <option>MP3 - 128kbps</option>
+                </select>
+              </div>
+
+              <button id="fetch-btn" class="btn big primary">Preview</button>
+            </div>
+
+            <p class="muted small">This is a frontend prototype — the Preview button shows a mock video card and download options.</p>
+          </div>
+
+          <div class="note">
+            <span class="badge">Prototype</span>
+            <p class="muted">All interactions are client-side placeholders. No network calls or downloads are performed.</p>
+          </div>
+        </div>
+
+        <aside class="hero-right">
+          <!-- Video preview card (dummy data) -->
+          <div id="preview-card" class="card preview-card glass">
+            <div class="thumb">
+              <!-- Placeholder thumbnail SVG -->
+              <svg viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100%" height="100%" fill="#111827" rx="12" />
+                <g fill="#fff" opacity="0.9">
+                  <circle cx="60" cy="90" r="28" fill="#6D5CFF" />
+                  <path d="M250 60 L200 90 L250 120 Z" fill="#FFB86B" />
+                </g>
+              </svg>
+            </div>
+
+            <div class="meta">
+              <h3 class="video-title">Demo Video Title (Dummy)</h3>
+              <p class="muted">Channel Name • 3:21 • 1.2M views</p>
+
+              <div class="download-options">
+                <div class="option">
+                  <button class="btn outline">MP4 • 1080p • 25MB</button>
+                </div>
+                <div class="option">
+                  <button class="btn outline">MP4 • 720p • 12MB</button>
+                </div>
+                <div class="option">
+                  <button class="btn outline">MP3 • 128kbps • 3.2MB</button>
+                </div>
+              </div>
+
+              <div class="card-actions">
+                <button id="download-btn" class="btn accent">Download (placeholder)</button>
+                <button id="more-btn" class="btn ghost">More</button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Quick features summary -->
+          <div class="card small glass stats">
+            <div class="stat">
+              <h4>Fast</h4>
+              <p class="muted">Smooth UI and fast interactions</p>
+            </div>
+            <div class="stat">
+              <h4>Secure</h4>
+              <p class="muted">No sensitive operations in prototype</p>
+            </div>
+            <div class="stat">
+              <h4>Responsive</h4>
+              <p class="muted">Designed for all devices</p>
+            </div>
+          </div>
+
+        </aside>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="container features">
+      <h2 class="section-title">Features</h2>
+      <p class="section-lead muted">All presentational features are included in this prototype.</p>
+
+      <div class="features-grid">
+        <div class="feature card glass">
+          <div class="icon">🎨</div>
+          <h3>Premium Design</h3>
+          <p class="muted">Gradients, glassmorphism, rounded cards, and modern spacing.</p>
+        </div>
+
+        <div class="feature card glass">
+          <div class="icon">⚡</div>
+          <h3>Smooth Animations</h3>
+          <p class="muted">Subtle transitions and interactive micro-animations.</p>
+        </div>
+
+        <div class="feature card glass">
+          <div class="icon">🔒</div>
+          <h3>Client-only Prototype</h3>
+          <p class="muted">No backend, no downloads; ready for integration in Phase 2.</p>
+        </div>
+
+        <div class="feature card glass">
+          <div class="icon">📱</div>
+          <h3>Responsive Layout</h3>
+          <p class="muted">Mobile, tablet, and desktop breakpoints included.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="how container">
+      <h2 class="section-title">How it works (prototype)</h2>
+      <div class="steps">
+        <div class="step card">
+          <div class="num">1</div>
+          <div class="desc">
+            <h4>Paste URL</h4>
+            <p class="muted">User pastes a YouTube URL into the input field.</p>
+          </div>
+        </div>
+
+        <div class="step card">
+          <div class="num">2</div>
+          <div class="desc">
+            <h4>Preview</h4>
+            <p class="muted">Preview card shows video details and available formats (mock data).</p>
+          </div>
+        </div>
+
+        <div class="step card">
+          <div class="num">3</div>
+          <div class="desc">
+            <h4>Choose Format</h4>
+            <p class="muted">Select MP4/MP3 options. Buttons are placeholders in this phase.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="container faq">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+
+      <div class="accordion">
+        <details open>
+          <summary>Is this a working downloader?</summary>
+          <p class="muted">No. This is a frontend-only prototype for visual and UX review.</p>
+        </details>
+
+        <details>
+          <summary>Will you add backend in Phase 2?</summary>
+          <p class="muted">Yes — the structure is ready for backend integration once approved.</p>
+        </details>
+
+        <details>
+          <summary>Can I preview on mobile?</summary>
+          <p class="muted">Yes — responsive styles and breakpoints are included.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h4>YT Video</h4>
+        <p class="muted">Premium UI prototype • No backend included</p>
+      </div>
+
+      <div class="links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+      </div>
+
+      <div>
+        <p class="muted">© 2026 YT Video Prototype</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Loading / Success / Error overlays (UI only) -->
+  <div id="overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <div id="overlay-spinner" class="spinner" aria-hidden></div>
+      <p id="overlay-text">Processing...</p>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="js/app.js" defer></script>
+</body>
+</html>
