@@ -1,0 +1,14 @@
+{
+  "name": "yt-video-backend",
+  "version": "1.0.0",
+  "description": "Backend for YT Video downloader prototype",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ytdl-core": "^4.11.0",
+    "fluent-ffmpeg": "^2.1.2"
+  }
+}
